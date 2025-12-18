@@ -1,19 +1,20 @@
 const asyncHandler = require("express-async-handler");
+// missing services for the controllers
 
-const registerUser = asyncHandler(async (req, res) => {
+const registerUserHandler = asyncHandler(async (req, res) => {
     return true;
 })
 
-const loginUser = asyncHandler(async (req, res) => {
+const loginUserHandler = asyncHandler(async (req, res) => {
     return true;
 })
 
-const currentUser = asyncHandler(async (req, res) => {
+const currentUserHandler = asyncHandler(async (req, res) => {
     return true;
 })
 
 module.exports = {
-    registerUser,
-    loginUser,
-    currentUser
+    registerUserHandler,
+    loginUserHandler,
+    currentUserHandler
 };
