@@ -10,9 +10,4 @@ router.post("/login", loginUserHandler);
 // Private route
 router.get("/current", currentUserHandler);
 
-// Test route
-// router.get("/test", (req, res) => {
-//   res.status(200).json({ message: "User route works" });
-// });
-
 module.exports = router;
