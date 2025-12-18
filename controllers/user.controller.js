@@ -17,11 +17,19 @@ const registerUserHandler = asyncHandler(async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await userService.createNewUser({ username, hashedPassword, email });
-    res.status(201).json({
-        username: user.username,
-        email: user.email
-    });
+    try {
+        const user = await userService.createNewUser({ username, hashedPassword, email });
+        res.status(201).json({
+            username: user.username,
+            email: user.email
+        });
+    } catch (err) {
+        if (err.code === 11000) {
+            res.status(400);
+            throw new Error("User already exists");
+        }
+        throw err;
+    }
 })
 
 const loginUserHandler = asyncHandler(async (req, res) => {
