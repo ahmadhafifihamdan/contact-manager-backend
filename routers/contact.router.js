@@ -1,18 +1,19 @@
 const { Router } = require("express");
-const { getContactsHandler, createContactHandler, updateContactHandler, deleteContactHandler } = require("../controllers/contact.controller");
+const { getAllContactsHandler, getSingleContactHandler, createContactHandler, updateContactHandler, deleteContactHandler } = require("../controllers/contact.controller");
+const { protect } = require("../middleware/authMiddleware");
 
 const router = Router();
 
 // Private routes
 router
     .route("/")
-    .get(getContactsHandler)
-    .post(createContactHandler);
+    .get(protect, getAllContactsHandler)
+    .post(protect, createContactHandler);
 
 router
     .route("/:id")
-    .get(getContactsHandler)
-    .put(updateContactHandler)
-    .delete(deleteContactHandler);
+    .get(protect, getSingleContactHandler)
+    .put(protect, updateContactHandler)
+    .delete(protect, deleteContactHandler);
 
 module.exports = router;
