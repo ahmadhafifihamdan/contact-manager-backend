@@ -1,67 +1,64 @@
-Contact Management App (MyContacts)
+# Contact Management App (MyContacts)
 
-This project is a Contact Management REST API built as part of the MyMahir TalentLabs – Back End Development program.
+This project is a **Contact Management REST API** built as part of the  
+**MyMahir TalentLabs – Back End Development** program.
 
-The application demonstrates backend fundamentals including authentication, authorization, CRUD operations, database persistence, and structured error handling using Node.js, Express, and MongoDB.
+The application demonstrates backend fundamentals including authentication, authorization, CRUD operations, database persistence, and structured error handling using **Node.js, Express, and MongoDB**.
 
-📌 Project Overview
+---
 
-MyContacts is a backend API that allows users to:
+## 📌 Project Overview
 
-Register and log in securely
+**MyContacts** is a backend API that allows users to:
 
-Authenticate using JSON Web Tokens (JWT)
+- Register and log in securely
+- Authenticate using JSON Web Tokens (JWT)
+- Manage their own contacts (Create, Read, Update, Delete)
+- Enforce user ownership (no cross-user access)
+- Handle invalid input and edge cases gracefully
 
-Manage their own contacts (Create, Read, Update, Delete)
+All APIs are tested using **Thunder Client**.  
+This project does not include a frontend.
 
-Ensure contacts are user-scoped (no cross-user access)
+---
 
-Handle invalid input and error cases gracefully
+## 🛠 Tools & Libraries
 
-All APIs are tested using Thunder Client (no frontend included).
+### Runtime & Framework
+- **Node.js**  
+  Core modules used: `http`, `path`, `fs`
+- **Express.js**  
+  Used to build RESTful APIs with routing, middleware, request handling, and JSON parsing
 
-🛠 Tools & Libraries
-Runtime & Framework
+### Authentication & Security
+- **bcrypt**  
+  Used to hash user passwords and compare hashed passwords during login
+- **jsonwebtoken (JWT)**  
+  Used to authenticate APIs by signing and verifying access tokens
 
-Node.js
-Core modules used: http, path, fs
+### Middleware & Utilities
+- **dotenv**  
+  Loads environment variables into `process.env`
+- **express-async-handler**  
+  Handles exceptions in async Express routes and forwards them to the global error handler
 
-Express.js
-Used to build RESTful APIs with routing, middleware, request handling, and JSON parsing
+### Database
+- **MongoDB**  
+  NoSQL database used to store Users and Contacts as JSON documents
+- **Mongoose**  
+  ODM used to define schemas, models, and interact with MongoDB
 
-Authentication & Security
+### Development & Testing
+- **Thunder Client**  
+  Lightweight REST API client used to test endpoints within VS Code
+- **Nodemon**  
+  Automatically restarts the server on file changes during development
 
-bcrypt
-Used to hash user passwords and compare hashes during login
+---
 
-jsonwebtoken (JWT)
-Used to authenticate APIs by signing and verifying access tokens
+## 📂 Project Structure
 
-Middleware & Utilities
-
-dotenv
-Loads environment variables into process.env
-
-express-async-handler
-Handles exceptions in async Express routes and forwards them to error middleware
-
-Database
-
-MongoDB
-NoSQL database used to store Users and Contacts as JSON documents
-
-Mongoose
-ODM used to define schemas, models, and interact with MongoDB
-
-Development & Testing
-
-Thunder Client
-Lightweight REST API client used for testing endpoints in VS Code
-
-Nodemon
-Automatically restarts the server on file changes during development
-
-📂 Project Structure (High Level)
+```
 src/
 ├── controllers/
 ├── services/
@@ -70,112 +67,106 @@ src/
 ├── middleware/
 ├── config/
 └── app.js
+```
 
+The architecture follows **separation of concerns**:
 
-Architecture follows separation of concerns:
+- Routes handle HTTP endpoints
+- Controllers manage request/response logic
+- Services handle database operations
+- Middleware manages authentication and error handling
 
-Routes → Controllers → Services → Database
+---
 
-Authentication handled via middleware
+## 🔐 Authentication Flow
 
-Global error handling middleware for consistency
+- Users register with a hashed password
+- Users log in to receive a JWT access token
+- Protected routes require:
 
-🔐 Authentication Flow
+```
+Authorization: Bearer <token>
+```
 
-Users register with a hashed password
+- Token verification and user resolution are handled via middleware
 
-Users log in to receive a JWT access token
+---
 
-Protected routes require Authorization: Bearer <token>
+## 📇 Contacts API Features
 
-Token verification and user resolution handled via middleware
+- Contacts are **scoped to the authenticated user**
+- Ownership is enforced at the database query level
+- Duplicate contacts per user are prevented using a compound unique index
+- Full CRUD support:
+  - Create contact
+  - Get all contacts
+  - Get single contact
+  - Update contact
+  - Delete contact
 
-📇 Contacts API Features
+---
 
-Contacts are scoped to the logged-in user
+## ⚠️ Error Handling
 
-Ownership enforced at the database query level
+- Centralized global error handler middleware
+- Handles:
+  - Invalid MongoDB ObjectId
+  - Validation errors
+  - Duplicate key errors
+  - Authentication and authorization errors
+- Returns consistent JSON error responses
 
-Duplicate contacts per user are prevented using a compound unique index
+---
 
-Full CRUD support:
+## 🧪 API Testing
 
-Create contact
+All APIs are testable using **Thunder Client** with:
 
-Get all contacts
+- Token reuse
+- Positive and negative test cases
+- No frontend or manual database setup required
 
-Get single contact
+---
 
-Update contact
+## 🚀 Getting Started
 
-Delete contact
-
-⚠️ Error Handling
-
-Global error handler middleware (E1)
-
-Handles:
-
-Invalid ObjectId
-
-Validation errors
-
-Duplicate key errors
-
-Authentication & authorization errors
-
-Consistent JSON error responses
-
-🧪 API Testing
-
-All APIs are testable using Thunder Client with:
-
-Token reuse
-
-Positive and negative test cases
-
-No frontend or manual DB manipulation required
-
-🚀 Getting Started
-1. Install dependencies
+### 1) Install dependencies
+```bash
 npm install
+```
 
-2. Configure environment variables
-
-Create a .env file:
-
+### 2) Configure environment variables
+Create a `.env` file:
+```env
 PORT=3000
 MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_secret_key
+```
 
-3. MongoDB credentials
+### 3) MongoDB credentials (submission requirement)
+Create a file named `mongodb_login.txt` and include your MongoDB database username and password.
 
-Create a file named:
-
-mongodb_login.txt
-
-
-Include your MongoDB database username and password (required for submission).
-
-4. Run the server
+### 4) Run the server
+```bash
 npm run dev
+```
 
-🎓 Program Context
+---
 
-This project was developed as part of the MyMahir TalentLabs – Back End Development curriculum to demonstrate practical backend engineering skills, including:
+## 🎓 Program Context
 
-REST API design
+This project was developed as part of the  
+**MyMahir TalentLabs – Back End Development** program to demonstrate:
 
-Authentication & authorization
+- REST API design
+- Authentication and authorization
+- Database modeling
+- Secure coding practices
+- Error handling
+- API testing
 
-Database modeling
+---
 
-Secure coding practices
+## ✅ Status
 
-Error handling
-
-API testing
-
-✅ Status
-
-All required features based on the provided rubric have been implemented and tested.
+All required features based on the provided rubric have been implemented and tested successfully.
