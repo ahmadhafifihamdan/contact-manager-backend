@@ -10,6 +10,11 @@ const findUserByEmail = async ({ email }) => {
     return User.findOne({ email: normalizeEmail(email)})
 }
 
+// For login
+const findUserByEmailandPassword = async ({ email }) => {
+    return User.findOne({ email: normalizeEmail(email) }).select("+password"); // select here is used because password is select: false in model
+}
+
 const createNewUser = async ({ username, email, hashedPassword }) => {
     return User.create({
         username: username.trim(),
@@ -20,5 +25,6 @@ const createNewUser = async ({ username, email, hashedPassword }) => {
 
 module.exports = {
     createNewUser,
-    findUserByEmail
+    findUserByEmail,
+    findUserByEmailandPassword
 }
