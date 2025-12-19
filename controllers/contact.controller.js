@@ -31,7 +31,13 @@ const getAllContactsHandler = asyncHandler (async (req, res) => {
 })
 
 const getSingleContactHandler = asyncHandler (async (req, res) => {
-    return true;
+    const contact = await contactService.getContactById(req.user._id, req.params.id);
+
+    if (!contact) {
+        res.status(404);
+        throw new Error("Contact not found");
+    }
+    return res.status(200).json(contact);
 })
 
 const deleteContactHandler = asyncHandler (async (req, res) =>{

@@ -18,7 +18,12 @@ const getAllContacts = async ({ userId }) => {
     return Contact.find({ user: userId });
 }
 
+const getContactById = async (userId, contactId) => {
+    return Contact.findOne({ user: userId, _id: contactId });
+}
+
 module.exports = {
     createNewContact,
-    getAllContacts
+    getAllContacts,
+    getContactById
 }
