@@ -4,18 +4,11 @@ const { protect } = require("../middleware/authMiddleware");
 
 const router = Router();
 
-router.get("/me-test", protect, (req, res) => {
-  res.status(200).json({
-    message: "You are authenticated",
-    user: req.user,
-  });
-});
-
 // Public route
 router.post("/register", registerUserHandler);
 router.post("/login", loginUserHandler);
 
 // Private route
-router.get("/current", currentUserHandler);
+router.get("/current", protect, currentUserHandler);
 
 module.exports = router;
