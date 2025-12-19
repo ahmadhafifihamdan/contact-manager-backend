@@ -27,4 +27,6 @@ const contactSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+contactSchema.index({ user: 1, email: 1 }, { unique: true });
+
 module.exports = mongoose.model("Contact", contactSchema);
