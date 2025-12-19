@@ -22,8 +22,23 @@ const getContactById = async (userId, contactId) => {
     return Contact.findOne({ user: userId, _id: contactId });
 }
 
+const updateContactById = async (userId, contactId, { name, email, phone }) => {
+    return Contact.findOneAndUpdate({ 
+        user: userId, 
+        _id: contactId 
+    }, { 
+        name: name.trim(), 
+        email: normalizeEmail(email), 
+        phone: phone.trim() 
+    }, { 
+        new: true, 
+        runValidators: true 
+    }); 
+}
+
 module.exports = {
     createNewContact,
     getAllContacts,
-    getContactById
+    getContactById,
+    updateContactById
 }

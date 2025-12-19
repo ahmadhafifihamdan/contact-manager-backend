@@ -45,7 +45,20 @@ const deleteContactHandler = asyncHandler (async (req, res) =>{
 })
 
 const updateContactHandler = asyncHandler(async (req, res) => {
-    return true;
+    const { name, email, phone } = req.body;
+    
+    if (!name || !email || !phone) {
+        res.status(400);
+        throw new Error("Contact name, email and phone number are mandatory");
+    }
+
+    const contact = await contactService.updateContactById(req.user._id, req.params.id, { name, email, phone });
+
+    if (!contact) {
+        res.status(404);
+        throw new Error("Contact not found");
+    }
+    return res.status(200).json(contact);
 })
 
 module.exports = { 
