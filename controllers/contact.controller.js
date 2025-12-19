@@ -26,7 +26,8 @@ const createContactHandler = asyncHandler (async (req, res) => {
 })
 
 const getAllContactsHandler = asyncHandler (async (req, res) => {
-    return true;
+    const allContacts = await contactService.getAllContacts({ userId: req.user._id });
+    return res.status(200).json(allContacts);
 })
 
 const getSingleContactHandler = asyncHandler (async (req, res) => {
