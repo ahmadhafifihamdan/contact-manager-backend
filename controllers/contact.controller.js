@@ -41,7 +41,14 @@ const getSingleContactHandler = asyncHandler (async (req, res) => {
 })
 
 const deleteContactHandler = asyncHandler (async (req, res) =>{
-    return true;
+    const contact = await contactService.deleteContactById(req.user._id, req.params.id);
+    
+    if (!contact) {
+        res.status(404);
+        throw new Error("Contact not found");
+    }
+
+    return res.status(200).json({ message: "Contact deleted" });
 })
 
 const updateContactHandler = asyncHandler(async (req, res) => {

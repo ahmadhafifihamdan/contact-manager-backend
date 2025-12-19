@@ -36,9 +36,14 @@ const updateContactById = async (userId, contactId, { name, email, phone }) => {
     }); 
 }
 
+const deleteContactById = async (userId, contactId) => {
+    return Contact.findOneAndDelete({ user: userId, _id: contactId })
+}
+
 module.exports = {
     createNewContact,
     getAllContacts,
     getContactById,
-    updateContactById
+    updateContactById,
+    deleteContactById
 }
