@@ -1,6 +1,7 @@
 const express = require('express');
 const { router } = require("./routers/index.router.js");
-const { PORT, JWT_SECRET } = require("./config/env.config");
+const { PORT } = require("./config/env.config");
+const { errorHandler } = require("./middleware/errorMiddleware");
 const connectDB = require('./config/dbConnection.js');
 
 const app = express();
@@ -23,5 +24,7 @@ const startServer = async () => {
 app.use((req, res) => {
   res.status(404).json({message: "Route not found."});
 });
+
+app.use(errorHandler);
 
 startServer();
