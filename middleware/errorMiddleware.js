@@ -20,13 +20,14 @@ const errorHandler = (err, req, res, next) => {
   }
 
   // --- MongoDB: duplicate key error (E11000) ---
+  // Happened for create User last time
   if (err.code === 11000) {
     statusCode = 400;
     const fields = Object.keys(err.keyValue || {});
     message = fields.length ? `${fields.join(", ")} already exists` : "Duplicate field value";
   }
 
-  // --- JWT errors (optional but useful) ---
+  // --- JWT errors ---
   if (err.name === "JsonWebTokenError") {
     statusCode = 401;
     message = "Not authorized, token invalid";
@@ -39,7 +40,6 @@ const errorHandler = (err, req, res, next) => {
 
   return res.status(statusCode).json({
     message,
-    // Turn this on only during development if you want
     stack: process.env.NODE_ENV === "production" ? undefined : err.stack,
   });
 };
