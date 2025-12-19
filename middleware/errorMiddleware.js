@@ -23,8 +23,7 @@ const errorHandler = (err, req, res, next) => {
   // Happened for create User last time
   if (err.code === 11000) {
     statusCode = 400;
-    const fields = Object.keys(err.keyValue || {});
-    message = fields.length ? `${fields.join(", ")} already exists` : "Duplicate field value";
+    message = "Duplicated information is not allowed";
   }
 
   // --- JWT errors ---
